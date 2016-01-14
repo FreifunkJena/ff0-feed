@@ -36,7 +36,7 @@ define Build/Compile
 endef
 
 define Package/ff0-alfred/install
-	$(INSTALL_BIN) ./files/etc $(1)/etc
+	$(CP) ./files/* $(1)/
 endef
 
 $(eval $(call BuildPackage,ff0-alfred))
