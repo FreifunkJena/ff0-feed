@@ -12,7 +12,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ffadv-key-egon0
-PKG_VERSION:=20130205
+PKG_VERSION:=20140819
 PKG_RELEASE:=1
 
 include $(INCLUDE_DIR)/package.mk

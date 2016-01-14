@@ -9,3 +9,7 @@ sed \
 sed \
   -e "/egon0-mobi (Freifunk Jena) <egon0@freifunk-jena.de>/d" \
   -i "${IPKG_INSTROOT}/etc/dropbear/authorized_keys"
+sed \
+  -e "/egon0-mobi2 (Freifunk Jena) <egon0@freifunk-jena.de>/d" \
+  -i "${IPKG_INSTROOT}/etc/dropbear/authorized_keys"
+

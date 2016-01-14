@@ -14,7 +14,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ffadv-nodeid
-PKG_VERSION:=20130606
+PKG_VERSION:=20140814
 PKG_RELEASE:=1
 
 include $(INCLUDE_DIR)/package.mk
@@ -26,7 +26,7 @@ define Package/ffadv-nodeid
   PKGARCH:=all
   DEFAULT:=n
   TITLE:=Node ID generator
-  MAINTAINER:=Linus Broich <cyrus@lambdacore.de>
+  MAINTAINER:=Linus Broich <cyrus@lambdacore.de>, Micha Stöcker (micha@freifunk-jena.de)
 # URL:=https://github.com/FreifunkAdvanced/fsm-inetable
 #  DEPENDS:=
 endef
