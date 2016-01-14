@@ -27,7 +27,7 @@ PKG_REV:=a506f9067bc5c5b8430c7eb23a146f478b7a9596
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_REV).tar.gz
 PKG_MD5SUM:=always-use-git
-PKG_SOURCE_URL:=git://github.com/FreifunkAdvanced/webservice.git
+PKG_SOURCE_URL:=git://github.com/FreifunkJena/ff0-webservice.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE_VERSION:=$(PKG_REV)
 PKG_SOURCE_PROTO:=git
