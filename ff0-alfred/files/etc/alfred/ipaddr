@@ -1,0 +1,3 @@
+if [ ! -z "$(batctl gw | grep server)" ]; then
+  ifconfig br-mesh | grep 'inet addr' | awk -F' ' '{print $2}' | awk -F':' '{print $2}' | sed ':a;N;$!ba;s/\n//g' | alfred -s 65
+fi
