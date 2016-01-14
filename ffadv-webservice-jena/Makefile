@@ -11,7 +11,7 @@
 #      2011 Frank Lanitz <frank@frank.uvena.de>
 #      2011 Martin Michel <darkeye@seestern.(none)>
 #      2011 frlan <frank@frank.uvena.de>
-# 2011-2012 egon_ffj <egon@freifunk-jena.de>
+# 2011-2016 Micha Stöcker <micha@freifunk-jena.de>
 # 2011-2012 Jan Huwald <jh@sotun.de>
 # 2011-2012 Freifunk Rheinland e. V. <http://www.freifunk-rheinland.net/>
 # 2011-2012 LCB01 <lcb01@fnordeingang.de>
@@ -21,9 +21,9 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ffadv-webservice-jena
-PKG_VERSION:=20140621
+PKG_VERSION:=20150115
 PKG_RELEASE:=1
-PKG_REV:=c12b1f3d01ff5996038b9b117f04e7da7fe35f2e
+PKG_REV:=a506f9067bc5c5b8430c7eb23a146f478b7a9596
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_REV).tar.gz
 PKG_MD5SUM:=always-use-git
