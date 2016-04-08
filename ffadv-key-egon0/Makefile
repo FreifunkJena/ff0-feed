@@ -12,8 +12,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ffadv-key-egon0
-PKG_VERSION:=20160331
-PKG_RELEASE:=3
+PKG_VERSION:=20160408
+PKG_RELEASE:=1
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -85,9 +85,9 @@ exit 0
 endef
 
 define Package/ffadv-key-egon0/install
-	mkdir -p $(1)/CONTROL
-	$(INSTALL_BIN) ./ipkg/ffadv-key-egon0.postinst $(1)/CONTROL/postinst
-	$(INSTALL_BIN) ./ipkg/ffadv-key-egon0.postrm $(1)/CONTROL/postrm
+#	mkdir -p $(1)/CONTROL
+#	$(INSTALL_BIN) ./ipkg/ffadv-key-egon0.postinst $(1)/CONTROL/postinst
+#	$(INSTALL_BIN) ./ipkg/ffadv-key-egon0.postrm $(1)/CONTROL/postrm
 endef
 
 $(eval $(call BuildPackage,ffadv-key-egon0))
