@@ -23,24 +23,13 @@ print_ips() {
   json_close_array
 }
 print_batneigh() {
-#        echo -n "\"batadv\" : {"
-#        echo -n "\"$(cat /sys/class/net/adhoc2/address)\": {"
-#        echo -n "{"
-#        echo -n "\"neighbors\": {"
 	json_add_object "$(cat /sys/class/net/bat0/address)"
 	json_add_object "neighbors"
         printLink() {
-###		json_add_object "neighbors"
-#                echo -n "\"$1\": {"
 		json_add_object "$1"
-#                echo -n " \"tq\": $2,"
 		json_add_int "tq" $2
-#		json_add_int "asdf" 1234
-#                echo -n " \"lastseen\": $(echo "$4" | sed 's/s//')"
 		json_add_double "lastseen" $(echo "$4" | sed 's/s//')
-#                echo -n "}";
 		json_close_object
-#		json_close_object
         }
         IFS="
 "
@@ -51,9 +40,6 @@ print_batneigh() {
                 printLink $entry
         done
 	json_close_object
-#        echo -n "}"
-#        echo -n "}"
-#        echo -n "}"
 }
 
 
@@ -76,12 +62,6 @@ json_add_array "mesh_interfaces"
 for test in $(batctl if | awk -F':' '{print $1 }'); do
   json_add_string "" "$(cat /sys/class/net/$test/address)"
  done
-#json_add_string "" "$(cat /sys/class/net/adhoc2/address)"
-#if [ -e /sys/class/net/mesh-vpn/address ]; then
-#  json_add_string "" "$(cat /sys/class/net/mesh-vpn/address)"
-#fi
-#json_add_string "" "$(cat /sys/class/net/eth0.3/address)"
-#json_add_string "" "$(cat /sys/class/net/bat0/address)"                              
 json_close_array
 json_add_string "mac" "$(cat /sys/class/net/eth0/address)"
 
@@ -92,7 +72,6 @@ json_close_object
 json_add_object "software"
   json_add_object "firmware"
     json_add_string "base" "$DISTRIB_DESCRIPTION"
-#    json_add_string "release" "$(cat /etc/banner | grep ', r' | awk -F '(' '{print $1}' | xargs) ($(cat /etc/banner | grep -Eo -m1 'r[0-9]+' | xargs))"
     print_firmware
   json_close_object
 json_close_object
@@ -154,9 +133,7 @@ json_close_object
 json_close_object
 json_close_object
 json_add_object "batadv"
-#json_add_object "$(cat /sys/class/net/adhoc2/address)"
 print_batneigh
-#json_close_object
 json_close_object
 MSG160=`json_dump`
 echo $MSG160 | gzip > /tmp/160.gz
