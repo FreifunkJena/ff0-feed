@@ -14,7 +14,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ffadv-fastdregister
-PKG_VERSION:=20140119
+PKG_VERSION:=20160409
 PKG_RELEASE:=1
 PKG_REV:=2dccbe3c9bc2e4ec01ff1a50d4bbd0d3a3c9f683
 
@@ -49,9 +49,14 @@ define Build/Compile
 endef
 
 define Package/ffadv-fastdregister/install
-	$(INSTALL_DIR) $(1)/etc/config $(1)/usr/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/sbin/fastdregister $(1)/usr/sbin/
+	$(INSTALL_DIR) $(1)/etc/init.d/
+	$(INSTALL_BIN) ipkg/fastdregister $(1)/etc/init.d/fastdregister
+
+	$(INSTALL_DIR) $(1)/etc/config
 	$(INSTALL_CONF) ipkg/fastdregister.config $(1)/etc/config/
+
+	$(INSTALL_DIR) $(1)/usr/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/sbin/fastdregister $(1)/usr/sbin/
 endef
 
 $(eval $(call BuildPackage,ffadv-fastdregister))
