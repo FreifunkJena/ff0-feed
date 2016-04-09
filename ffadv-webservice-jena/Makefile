@@ -21,9 +21,9 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ffadv-webservice-jena
-PKG_VERSION:=20150115
+PKG_VERSION:=20160409
 PKG_RELEASE:=1
-PKG_REV:=a506f9067bc5c5b8430c7eb23a146f478b7a9596
+PKG_REV:=jena
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_REV).tar.gz
 PKG_MD5SUM:=always-use-git
