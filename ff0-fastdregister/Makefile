@@ -13,7 +13,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=ffadv-fastdregister
+PKG_NAME:=ff0-fastdregister
 PKG_VERSION:=20160409
 PKG_RELEASE:=1
 PKG_REV:=2dccbe3c9bc2e4ec01ff1a50d4bbd0d3a3c9f683
@@ -27,7 +27,7 @@ PKG_SOURCE_PROTO:=git
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/ffadv-fastdregister
+define Package/ff0-fastdregister
   SECTION:=base
   CATEGORY:=Utilities
   SUBMENU:=Freifunk Advanced
@@ -39,7 +39,7 @@ define Package/ffadv-fastdregister
   DEPENDS:=+netcat
 endef
 
-define Package/ffadv-fastdregister/description
+define Package/ff0-fastdregister/description
 	This script registers a node at fastd servers using a md5 hash of the fastd public key as hostname.
 	It is designed to work together with Freifunk Rheinland registration service.
 	See: https://github.com/FreifunkAdvanced/ffff
@@ -48,7 +48,7 @@ endef
 define Build/Compile
 endef
 
-define Package/ffadv-fastdregister/install
+define Package/ff0-fastdregister/install
 	$(INSTALL_DIR) $(1)/etc/init.d/
 	$(INSTALL_BIN) ipkg/fastdregister $(1)/etc/init.d/fastdregister
 
@@ -59,4 +59,4 @@ define Package/ffadv-fastdregister/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/sbin/fastdregister $(1)/usr/sbin/
 endef
 
-$(eval $(call BuildPackage,ffadv-fastdregister))
+$(eval $(call BuildPackage,ff0-fastdregister))
