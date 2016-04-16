@@ -13,8 +13,8 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=ffadv-fsm-inetable
-PKG_VERSION:=20160410
+PKG_NAME:=ff0-fsm-inetable
+PKG_VERSION:=20160416
 PKG_RELEASE:=1
 PKG_REV:=current
 
@@ -27,26 +27,26 @@ PKG_SOURCE_PROTO:=git
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/ffadv-fsm-inetable
+define Package/ff0-fsm-inetable
   SECTION:=base
   CATEGORY:=Utilities
-  SUBMENU:=Freifunk Advanced
+  SUBMENU:=Freifunk Zero
   PKGARCH:=all
   DEFAULT:=n
   TITLE:=Finite State Machine Inetable States
   MAINTAINER:=Linus Broich <lcb01@lcb01.de>
 # URL:=https://github.com/FreifunkAdvanced/fsm-inetable
-  DEPENDS:=ffadv-fsm +ffadv-urlencoder +firewall
+  DEPENDS:=ff0-fsm +ffadv-urlencoder +firewall
 endef
 
-define Package/ffadv-fsm-inetable/description
+define Package/ff0-fsm-inetable/description
 	Finite State Machine Inetable States
 endef
 
 define Build/Compile
 endef
 
-define Package/ffadv-fsm-inetable/install
+define Package/ff0-fsm-inetable/install
 	$(INSTALL_DIR) $(1)/etc $(1)/lib/fsm/inetable $(1)/lib/fsm/inetable/trans $(1)/lib/fsm/inetable/watch $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/lib/fsm/inetable/trans/*   $(1)/lib/fsm/inetable/trans/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/lib/fsm/inetable/watch/* $(1)/lib/fsm/inetable/watch/
@@ -58,4 +58,4 @@ define Package/ffadv-fsm-inetable/install
 	$(INSTALL_BIN) ./ipkg/ffadv-fsm-inetable.postrm $(1)/CONTROL/postrm
 endef
 
-$(eval $(call BuildPackage,ffadv-fsm-inetable))
+$(eval $(call BuildPackage,ff0-fsm-inetable))
