@@ -53,9 +53,6 @@ define Package/ff0-fsm-inetable/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/sbin/test_connectivity $(1)/usr/sbin/
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/etc/firewall.ffrl $(1)/etc/
 	$(CP) $(PKG_BUILD_DIR)/lib/fsm/inetable/{common.sh,common-watch.sh,common-queen.sh,initial_state} $(1)/lib/fsm/inetable/
-	mkdir -p $(1)/CONTROL
-	$(INSTALL_BIN) ./ipkg/ffadv-fsm-inetable.postinst $(1)/CONTROL/postinst
-	$(INSTALL_BIN) ./ipkg/ffadv-fsm-inetable.postrm $(1)/CONTROL/postrm
 endef
 
 $(eval $(call BuildPackage,ff0-fsm-inetable))
