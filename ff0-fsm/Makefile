@@ -12,8 +12,8 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=ffadv-fsm
-PKG_VERSION:=20140113
+PKG_NAME:=ff0-fsm
+PKG_VERSION:=20160416
 PKG_RELEASE:=1
 PKG_REV:=6ebd38b31618e6db349028b1a46eb896c3171e77
 
@@ -26,19 +26,19 @@ PKG_SOURCE_PROTO:=git
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/ffadv-fsm
+define Package/ff0-fsm
   SECTION:=base
   CATEGORY:=Utilities
-  SUBMENU:=Freifunk Advanced
+  SUBMENU:=Freifunk Zero
   PKGARCH:=all
   DEFAULT:=n
   TITLE:=Finite State Machine Interpreter
 # MAINTAINER:=Jan Huwald <jh@sotun.de>
 # URL:=http://code.sotun.de/git/ffj/fsm
-  DEPENDS:=+flock +ffadv-p2ptbl
+#  DEPENDS:=+flock +ffadv-p2ptbl
 endef
 
-define Package/ffadv-fsm/description
+define Package/ff0-fsm/description
 	Allows to implement FSMs using sets of executables (typically
 	shell scripts)
 endef
@@ -46,7 +46,7 @@ endef
 define Build/Compile
 endef
 
-define Package/ffadv-fsm/install
+define Package/ff0-fsm/install
 	$(INSTALL_DIR) $(1)/usr/sbin $(1)/lib/fsm $(1)/lib/netifd $(1)/lib/netifd/proto
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/sbin/fsm $(1)/usr/sbin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/sbin/netifd-fsm $(1)/usr/sbin/
@@ -55,4 +55,4 @@ define Package/ffadv-fsm/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/lib/netifd/proto/fsm.sh $(1)/lib/netifd/proto/fsm.sh
 endef
 
-$(eval $(call BuildPackage,ffadv-fsm))
+$(eval $(call BuildPackage,ff0-fsm))
