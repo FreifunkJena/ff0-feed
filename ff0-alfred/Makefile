@@ -12,8 +12,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ff0-alfred
-PKG_VERSION:=20160115
-PKG_RELEASE:=2
+PKG_VERSION:=20160416
+PKG_RELEASE:=1
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -22,10 +22,10 @@ define Package/ff0-alfred
   CATEGORY:=Utilities
   SUBMENU:=Freifunk Zero
   PKGARCH:=all
-  DEFAULT:=n
+  DEFAULT:=y
   TITLE:=Alfred factors
   MAINTAINER:=Micha Stöcker <micha@freifunk-jena.de>
-  DEPENDS:=alfred
+  DEPENDS:=+alfred +ethtool +iwinfo
 endef
 
 define Package/ff0-alfred/description
