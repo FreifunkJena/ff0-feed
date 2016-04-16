@@ -6,6 +6,18 @@ lat=$(uci get owm.settings.lat)
 lon=$(uci get owm.settings.lon)
 source /etc/openwrt_release
 
+STATS=$(ethtool -S bat0)
+TX_BYTES=$(echo "$STATS" | grep " tx_bytes" | awk -F' ' '{print $2}')
+TX_PACKETS=$(echo "$STATS" | grep " tx:" | awk -F' ' '{print $2}')   
+RX_BYTES=$(echo "$STATS" | grep " rx_bytes" | awk -F' ' '{print $2}')
+RX_PACKETS=$(echo "$STATS" | grep " rx:" | awk -F' ' '{print $2}')
+FORWARD_BYTES=$(echo "$STATS" | grep " forward_bytes:" | awk -F' ' '{print $2}')
+FORWARD_PACKETS=$(echo "$STATS" | grep " forward:" | awk -F' ' '{print $2}')
+MGMT_TX_BYTES=$(echo "$STATS" | grep " mgmt_tx_bytes" | awk -F' ' '{print $2}')   
+MGMT_TX_PACKETS=$(echo "$STATS" | grep " mgmt_tx:" | awk -F' ' '{print $2}')     
+MGMT_RX_BYTES=$(echo "$STATS" | grep " mgmt_rx_bytes" | awk -F' ' '{print $2}')
+MGMT_RX_PACKETS=$(echo "$STATS" | grep " mgmt_rx:" | awk -F' ' '{print $2}') 
+
 print_firmware() {
 source /etc/openwrt_release
 if [ -f /etc/firmware ];
@@ -46,6 +58,32 @@ print_batneigh() {
 # generating json data
 nodeid=$(cat /sys/class/net/eth0/address | tr -d ':')
 
+print_wifistats() {                                                
+iw dev adhoc2 survey dump > /tmp/wifistats.tmp                    
+ACT_CUR=$(ACTIVE=$(cat /tmp/wifistats.tmp | grep "active time:"); set ${ACTIVE:-0 0 0 0 0}; echo -e "${4}")
+BUS_CUR=$(BUSY=$(cat /tmp/wifistats.tmp | grep "busy time:"); set ${BUSY:-0 0 0 0 0}; echo -e "${4}")  
+                                                                                                      
+ACT_OLD=$(sed '1q;d' /tmp/wifistats.old)                                                                
+BUS_OLD=$(sed '2q;d' /tmp/wifistats.old)                                                                                                                   
+                                                          
+echo $ACT_CUR > /tmp/wifistats.old                                                                      
+echo $BUS_CUR >> /tmp/wifistats.old                                                                               
+rm /tmp/wifistats.tmp                                           
+                                                                                       
+json_add_object "wifistats"                                         
+  json_add_object "last_minute"
+    json_add_int "active" $(awk "BEGIN {printf \"%i\", $(echo "$ACT_CUR") - $(echo "$ACT_OLD")}")
+    json_add_int "busy" $(awk "BEGIN {printf \"%i\", $(echo "$BUS_CUR") - $(echo "$BUS_OLD")}")
+    json_add_double "utilization" $(awk "BEGIN {printf \"%.8f\", $(echo "$BUS_OLD") / $(echo "$ACT_OLD")}")                                             
+  json_close_object                               
+  json_add_object "total"
+    json_add_int "active" $ACT_CUR                    
+    json_add_int "busy" $BUS_CUR
+    json_add_double "utilization" $(awk "BEGIN {printf \"%.8f\", $(echo "$BUS_CUR") / $(echo "$ACT_CUR")}")
+  json_close_object              
+json_close_object                                                             
+}
+
 json_init
 json_add_string "node_id" $nodeid
 json_add_string "hostname" $(cat /proc/sys/kernel/hostname)
@@ -56,6 +94,7 @@ if [ "$(uci get owm.settings.lat)" != "0" ]; then
   json_add_string "altitude" "0"
   json_close_object
 fi
+print_wifistats
 json_add_object "network"
 print_ips
 json_add_array "mesh_interfaces"
@@ -104,6 +143,29 @@ json_close_object
 if [ ! -e $(cat /sys/kernel/debug/batman_adv/bat0/gateways | grep "=>" | awk -F' ' '{print $2}') ]; then
   json_add_string "gateway" $(cat /sys/kernel/debug/batman_adv/bat0/gateways | grep "=>" | awk -F' ' '{print $2}')
 fi
+json_add_object "traffic"                                                   
+  json_add_object "forward"                                                    
+    json_add_int "packets" $FORWARD_PACKETS                                   
+    json_add_int "bytes" $FORWARD_BYTES                                        
+  json_close_object                                                         
+  json_add_object "rx"                                      
+    json_add_int "packets" $RX_PACKETS                   
+    json_add_int "bytes" $RX_BYTES     
+  json_close_object                                               
+  json_add_object "tx"                                          
+    json_add_int "packets" $TX_PACKETS                           
+    json_add_int "bytes" $TX_BYTES                              
+  json_close_object                                                                 
+  json_add_object "mgmt_rx"                                                          
+    json_add_int "packets" $MGMT_RX_PACKETS                                           
+    json_add_int "bytes" $MGMT_RX_BYTES                                                
+  json_close_object            
+  json_add_object "mgmt_tx"                                                             
+    json_add_int "packets" $MGMT_TX_PACKETS                       
+    json_add_int "bytes" $MGMT_TX_BYTES
+  json_close_object                                                                             
+json_close_object
+json_add_double "rootfs_usage" $(df="$( df | grep " /"$ )"; set ${df:-0 0 0 0}; awk "BEGIN {printf \"%.8f\n\", $(echo "${3%*}")/$(echo "${2%*}")}")
 MSG159=`json_dump`
 echo $MSG159 | gzip > /tmp/159.gz
 cat /tmp/159.gz | alfred -s 159
@@ -132,8 +194,10 @@ done
 json_close_object
 json_close_object
 json_close_object
-json_add_object "batadv"
-print_batneigh
+  json_add_object "batadv"
+    print_batneigh
+  json_close_object
+json_close_object
 json_close_object
 MSG160=`json_dump`
 echo $MSG160 | gzip > /tmp/160.gz
