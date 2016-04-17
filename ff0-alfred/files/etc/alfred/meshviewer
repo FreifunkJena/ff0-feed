@@ -113,6 +113,7 @@ json_add_object "software"
     json_add_string "base" "$DISTRIB_DESCRIPTION"
     print_firmware
   json_close_object
+json_add_int "nproc" $(cat /proc/cpuinfo | grep -ic Bogo)
 json_close_object
 MSG158=`json_dump`
 echo $MSG158 | gzip > /tmp/158.gz

@@ -12,7 +12,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ff0-alfred
-PKG_VERSION:=20160416
+PKG_VERSION:=20160417
 PKG_RELEASE:=1
 
 include $(INCLUDE_DIR)/package.mk
